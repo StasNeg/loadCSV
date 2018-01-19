@@ -3,12 +3,12 @@ package com.loadCsv.service;
 
 import java.util.Map;
 
-public class CSVStatislic  {
+public class CSVStatistic {
     private Map<String, Integer> headers;
     private Map<String, Integer> headersStatistic;
     private int recordsCount;
 
-    public CSVStatislic(Map<String, Integer> headers, Map<String, Integer> headersStatistic, int recordsCount) {
+    public CSVStatistic(Map<String, Integer> headers, Map<String, Integer> headersStatistic, int recordsCount) {
         this.headers = headers;
         this.headersStatistic = headersStatistic;
         this.recordsCount = recordsCount;

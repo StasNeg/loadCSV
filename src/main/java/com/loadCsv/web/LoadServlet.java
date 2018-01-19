@@ -7,9 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -34,13 +32,7 @@ public class LoadServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<File> files = service.getFiles();
-        List<String> statistic = new ArrayList<>();
-        for ( File file: files) {
-            String toUser = "File Name = " + file.getName() + " ";
-            toUser += service.getAllData(file).getStaistic();
-            statistic.add(toUser);
-        }
+        List<String> statistic = service.getStatistic();
         request.setAttribute("csvStatistics", statistic);
         request.getRequestDispatcher("/listFiles.jsp").forward(request, response);
     }

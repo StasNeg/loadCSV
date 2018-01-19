@@ -15,43 +15,43 @@ import java.util.Map;
 
 
 public class LoadCSV {
-    private String path;
+    private final String PATH;
     private List<File> files = new ArrayList<File>();
 
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public List<File> getFiles() {
-        return files;
-    }
-
-    public void setFiles(List<File> files) {
-        this.files = files;
+    public String getPATH() {
+        return PATH;
     }
 
     public LoadCSV(String path) {
-        this.path = path;
-        createFilesLists();
+        this.PATH = path;
     }
 
-    private void createFilesLists() {
-        File folder = new File(path);
+    private synchronized List<File> createFilesList() {
+        File folder = new File(PATH);
+        files.clear();
         if (!folder.exists() || !folder.isDirectory())
-            throw new RuntimeException("Wrong foder init");
-        File[] files = folder.listFiles();
-        for (File temp : files) {
+            throw new RuntimeException("Wrong folder init");
+        File[] filesInFolder = folder.listFiles();
+        for (File temp : filesInFolder) {
             String name = temp.getName();
             if (name.substring(name.lastIndexOf('.'), name.length()).equals(".csv")) {
-                this.files.add(temp);}
+                files.add(temp);}
         }
+        return files;
     }
 
-    public CSVStatislic getAllData(File file) throws IOException {
+    public List<String> getStatistic() throws IOException{
+        files = createFilesList();
+        List<String> statistic = new ArrayList<>();
+        for ( File file: files) {
+            String fileStatistic = "File Name = " + file.getName() + " ";
+            fileStatistic += getAllData(file).getStaistic();
+            statistic.add(fileStatistic);
+        }
+        return statistic;
+    }
+
+    private CSVStatistic getAllData(File file) throws IOException {
             int recordsCount;
             Map<String, Integer> headers;
             Map<String, Integer> headersStatistic = new HashMap<>();
@@ -76,6 +76,6 @@ public class LoadCSV {
                 }
 
             }
-        return new CSVStatislic(headers, headersStatistic, recordsCount);
+        return new CSVStatistic(headers, headersStatistic, recordsCount);
     }
 }

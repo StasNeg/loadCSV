@@ -8,10 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class LoadCSV {
@@ -42,6 +39,9 @@ public class LoadCSV {
 
     public List<String> getStatistic() throws IOException{
         files = createFilesList();
+        if(files.isEmpty()){
+            return Arrays.asList("No .csv files in directory: " + PATH);
+        }
         List<String> statistic = new ArrayList<>();
         for ( File file: files) {
             String fileStatistic = "File Name = " + file.getName() + " ";

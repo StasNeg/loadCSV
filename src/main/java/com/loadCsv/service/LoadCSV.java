@@ -66,7 +66,7 @@ public class LoadCSV {
                 headers = csvParser.getHeaderMap();
                 for (CSVRecord csvRecord : csvRecords) {
                     for (String key : headers.keySet()) {
-                        if (csvRecord.get(key).isEmpty()) {
+                        if (headers.get(key) >= csvRecord.size() || csvRecord.get(key).isEmpty()) {
                             if (headersStatistic.get(key) == null)
                                 headersStatistic.put(key, 1);
                             else
